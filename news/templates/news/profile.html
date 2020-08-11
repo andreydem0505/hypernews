@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>{{ user }}</title>
+</head>
+<body>
+    <header class="mycontainer">
+        <h2 class="white">HyperNews</h2>
+        <div>
+            <a class="nav_link" href="/">главная</a>
+            <a class="nav_link" href="/news">новости</a>
+            <a class="nav_link" href="/about">о сайте</a>
+            <a class="nav_link" href="/news/create">создать</a>
+            <a class="nav_link" href="/login">войти</a>
+        </div>
+    </header>
+    <header class="mycontainer underheader border0">
+        <h2 class="white bighead float-left">{{ user }}</h2>
+        <div>
+            <a href="/change/password" class="mybtn btn5 m30">Сменить пароль</a>
+            <a href="/logout" class="mybtn btn4 m30">Выйти</a>
+        </div>
+    </header>
+    {% if user.theme|length == 0 %}
+    <div class="mycontainer">
+        <p class="choose">Добавьте интересующую вас тему новостей:</p>
+        <form method="post">{% csrf_token %}
+        <select required="" name="theme">
+            <option value="">Зкономика</option>
+            <option>Политика</option>
+            <option>Медицина</option>
+            <option>Экология</option>
+            <option>Спорт</option>
+            <option>Авто</option>
+            <option>IT</option>
+            <option>Наука</option>
+            <option>Культура</option>
+        </select><br><br>
+        <button class="mybtn btn2" type="submit">Сохранить</button>
+    </form>
+    </div>
+    {% else %}
+    <div class="mycontainer">
+        {% if error|length == 0 %}
+            {% for date, group in news.items %}
+                <h2 class="date">{{ date }}</h2>
+                <ul>
+                    {% for article in group %}
+                    <li class="allnews hov"><a class="allnews hov" href="/news/{{ article.link }}/">{{ article.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        {% else %}
+        <span>{{ error }}</span>
+        {% endif %}
+        <p class="choose">Изменить тему:</p>
+        <form method="post">{% csrf_token %}
+        <select required="" name="theme">
+            <option value="">{{ user.theme }}</option>
+            <option>Экономика</option>
+            <option>Политика</option>
+            <option>Медицина</option>
+            <option>Экология</option>
+            <option>Спорт</option>
+            <option>Авто</option>
+            <option>IT</option>
+            <option>Наука</option>
+            <option>Культура</option>
+        </select><br><br>
+        <button class="mybtn btn2" type="submit">Сохранить</button>
+        </form>
+    </div>
+    {% endif %}
+</body>
+</html>

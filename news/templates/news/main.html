@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>HyperNews</title>
+</head>
+<body>
+    <header class="mycontainer">
+        <h2 class="white">HyperNews</h2>
+        <div>
+            <a class="nav_link active" href="/">главная</a>
+            <a class="nav_link" href="/news">новости</a>
+            <a class="nav_link" href="/about">о сайте</a>
+            <a class="nav_link" href="/news/create">создать</a>
+            {% if user == None %}
+            <a class="nav_link" href="/login">войти</a>
+            {% else %}
+            <a class="profile-link" href="/profile">{{ user }}</a>
+            {% endif %}
+        </div>
+    </header>
+    <article class="mycontainer2 center">
+        <p class="centerlogo">HyperNews</p>
+        <p class="text">Все мировые новости на одном сайте.
+            Узнавайте, что происходит в мире, обсуждайте события с другими пользователями и создавайте статьи сами.</p>
+        <a class="text mybtn" href="/news">Все новости</a>
+    </article>
+    <footer class="mycontainer2 center">
+        <p class="nav white footer">новости, доступные для всех</p>
+    </footer>
+</body>
+</html>

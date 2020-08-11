@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Create news</title>
+</head>
+<body>
+    <header class="mycontainer">
+        <h2 class="white">HyperNews</h2>
+        <div>
+            <a class="nav_link" href="/">главная</a>
+            <a class="nav_link" href="/news">новости</a>
+            <a class="nav_link" href="/about">о сайте</a>
+            <a class="nav_link active" href="/news/create">создать</a>
+            <a class="nav_link" href="/login">войти</a>
+        </div>
+    </header>
+    {% if user is not None %}
+    <form class="mycontainer underheader" action="/news/create/" method="post">{% csrf_token %}
+        <h2 class="white bighead">Создайте новостную статью</h2>
+        <input class="search long" placeholder="Заголовок" autocomplete="off" name="title" type="text"><br>
+        <textarea name="text" placeholder="Основной текст"></textarea><br>
+        <button class="mybtn btn2" type="submit">Создать</button>
+        <p class="allnews">Спасибо за вклад в развитие сайта!</p>
+        <p class="allnews">Статья появится только после проверки администратора!</p>
+    </form>
+    {% else %}
+        <div class="mycontainer underheader">
+            <h2 class="white bighead">К сожалению, вы не можете создать статью, не войдя в аккаунт.</h2><br><br>
+            <a class="text mybtn" href="/login">Войти</a>
+        </div>
+    {% endif %}
+</body>
+</html>
